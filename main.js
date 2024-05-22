@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { SerialPort } = require('serialport');
-const { exec } = require('child_process');
+const { spawn } = require('child_process');
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -35,22 +35,45 @@ ipcMain.handle('list-ports', async () => {
 
 ipcMain.handle('run-script', async (event, scriptPath) => {
   return new Promise((resolve, reject) => {
-    exec(scriptPath, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`Error executing script: ${error.message}`);
-        reject(`Error executing script: ${error.message}`);
+    console.log('-----------------------------');
+    const script = spawn('cmd.exe', ['/c', scriptPath]);
+
+    let stdout = '';
+    let stderr = '';
+
+    script.stdout.on('data', (data) => {
+      stdout += data.toString();
+    });
+
+    script.stderr.on('data', (data) => {
+      stderr += data.toString();
+    });
+
+    script.on('close', (code) => {
+      console.log('main -> run-script -> close with code:', code);
+
+      if (code !== 0) {
+        reject(`Script exited with code ${code}`);
         return;
       }
+
       if (stderr) {
         console.error(`Script stderr: ${stderr}`);
         reject(`Script stderr: ${stderr}`);
         return;
       }
+
       console.log(`Script stdout: ${stdout}`);
       resolve(stdout);
     });
+
+    script.on('error', (error) => {
+      console.error(`Error executing script: ${error.message}`);
+      reject(`Error executing script: ${error.message}`);
+    });
   });
 });
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

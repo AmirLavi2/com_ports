@@ -32,15 +32,15 @@ refreshButton.addEventListener('click', async () => {
         comPortsSelect.appendChild(option);
 
         const comSN = document.createElement('span');
-        comSN.innerHTML = 'S/N: ' + port.serialNumber;
+        comSN.innerHTML = 's/n: ' + port.serialNumber;
         comList.appendChild(comSN);
 
         const comPort = document.createElement('span');
-        comPort.innerHTML = ' | PORT: ' + port.path;
+        comPort.innerHTML = ' | port: ' + port.path;
         comList.appendChild(comPort);
 
         const deviceNameText = document.createElement('span');
-        deviceNameText.innerHTML = ' | NAME: ';
+        deviceNameText.innerHTML = ' | nickname: ';
         comList.appendChild(deviceNameText);
 
         const comName = document.createElement('input');
@@ -62,6 +62,8 @@ refreshButton.addEventListener('click', async () => {
 
 runScriptButton.addEventListener('click', async () => {
     const scriptPath = batchScriptInput.files[0].path;
+
+    console.log('scriptPath:', scriptPath);
     try {
         const output = await window.electronAPI.runScript(scriptPath);
         outputPre.textContent = output;

@@ -1,6 +1,8 @@
 this is an Electron project that see active COM ports connection.
+Electron can create exe programs with Javascript:
 https://en.wikipedia.org/wiki/Electron_(software_framework)
 
+----------------------------
 need to install:
 Node.js, NPM, ElectronJS
 
