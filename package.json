@@ -1,0 +1,22 @@
+{
+  "name": "electron_com_port",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "vue-cli-service electron:build --windows",
+    "package": "electron-packager . MyApp --platform=win32 --arch=x64 --out=dist --overwrite"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^30.0.6",
+    "serialport": "^12.0.0"
+  },
+  "devDependencies": {
+    "electron-packager": "^17.1.2",
+    "vue-cli-plugin-electron-builder": "^2.1.1"
+  }
+}
