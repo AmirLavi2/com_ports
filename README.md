@@ -12,3 +12,7 @@ npm start
 
 create EXE (will create dist folder with the exe):
 npm run package
+
+using boardsNickname.json to add nickname to connected device
+
+we can use batch_example.bat to test the code

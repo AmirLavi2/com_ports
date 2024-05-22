@@ -1,0 +1,7 @@
+com GUI
+זיהוי הבקרי ארדוינו ולאיזה com הם מחוברים
+שינוי שם לבקר
+Bus reportet device description =? device name
+כפתור שיריץ את ה BAT
+reset לבקר אם יש תקלת תקשורת
+--------
