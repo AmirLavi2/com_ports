@@ -6,7 +6,7 @@ const { spawn } = require('child_process');
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
-    width:  800,
+    width: 800,
     height: 800,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -43,10 +43,12 @@ ipcMain.handle('run-script', async (event, scriptPath) => {
 
     script.stdout.on('data', (data) => {
       stdout += data.toString();
+      console.log('main -> run-script -> stdout:', stdout);
     });
 
     script.stderr.on('data', (data) => {
       stderr += data.toString();
+      console.log('main -> run-script -> stderr:', stderr);
     });
 
     script.on('close', (code) => {
@@ -92,14 +94,14 @@ ipcMain.handle('save-config', async (event, comName) => {
   try {
     console.log('main -> save-config -> comName:', comName);
 
-      // const configPath = path.join(app.getPath('userData'), 'config.json');
-      // await fs.promises.writeFile(configPath, JSON.stringify({ comName }));
-      const configPath = 'boardsNickname.json'
-      const data = await fs.promises.readFile(configPath, 'utf-8');
+    // const configPath = path.join(app.getPath('userData'), 'config.json');
+    // await fs.promises.writeFile(configPath, JSON.stringify({ comName }));
+    const configPath = 'boardsNickname.json'
+    const data = await fs.promises.readFile(configPath, 'utf-8');
 
-      return { success: true, message: data };
+    return { success: true, message: data };
   } catch (error) {
-      console.error('Error writing to file', error);
-      return { success: false, message: 'Failed to save configuration' };
+    console.error('Error writing to file', error);
+    return { success: false, message: 'Failed to save configuration' };
   }
 });

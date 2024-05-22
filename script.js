@@ -62,12 +62,13 @@ refreshButton.addEventListener('click', async () => {
 
 runScriptButton.addEventListener('click', async () => {
     const scriptPath = batchScriptInput.files[0].path;
-
-    console.log('scriptPath:', scriptPath);
     try {
-        const output = await window.electronAPI.runScript(scriptPath);
-        outputPre.textContent = output;
+        const batchRes = await window.electronAPI.runScript(scriptPath);
+        const outputPre = document.getElementById('output');
+        outputPre.textContent = batchRes;
     } catch (error) {
+        console.log('runScriptButton -> scriptPath:', scriptPath);
+        console.log('runScriptButton -> batchRes:', batchRes);
         outputPre.textContent = `Error: ${error}`;
     }
 });
